@@ -24,8 +24,8 @@ app = FastAPI(title="Dashboard Cloning Tool", version="1.0.0")
 app.add_middleware(CORSMiddleware, allow_origins=["*"], allow_credentials=True, allow_methods=["*"], allow_headers=["*"])
 
 FRONTEND_DIR = os.path.join(os.path.dirname(__file__), '..', 'frontend')
-TEMPLATES_DIR = os.path.join(os.path.dirname(__file__), '..', config.TEMPLATES_DIR)
-OUTPUTS_DIR = os.path.join(os.path.dirname(__file__), '..', config.OUTPUT_DIR)
+TEMPLATES_DIR = config.get_templates_dir()
+OUTPUTS_DIR = config.get_outputs_dir()
 CONFIG_DIR = os.path.join(os.path.dirname(__file__), '..', 'config')
 DASHBOARDS_JSON = os.path.join(CONFIG_DIR, 'dashboards.json')
 

@@ -4,7 +4,7 @@ import bcrypt
 from datetime import datetime
 from config import config
 
-DB_PATH = os.path.join(os.path.dirname(__file__), '..', 'database', 'app.db')
+DB_PATH = config.get_db_path()
 
 def get_db():
     conn = sqlite3.connect(DB_PATH)
