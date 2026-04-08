@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dashboard Cloning Tool — Login</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  :root{
+    --bg:#0a0c14;--surface:#111320;--surface2:#181b2e;
+    --border:#1e2240;--amber:#f59e0b;--amber2:#fbbf24;
+    --text:#e2e8f0;--muted:#64748b;--danger:#ef4444;
+    --success:#10b981;
+  }
+  body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;display:flex;align-items:center;justify-content:center;overflow:hidden}
+  .bg-grid{position:fixed;inset:0;background-image:linear-gradient(var(--border) 1px,transparent 1px),linear-gradient(90deg,var(--border) 1px,transparent 1px);background-size:40px 40px;opacity:0.4;pointer-events:none}
+  .glow{position:fixed;width:600px;height:600px;background:radial-gradient(circle,rgba(245,158,11,0.08) 0%,transparent 70%);top:50%;left:50%;transform:translate(-50%,-50%);pointer-events:none}
+  .card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:48px 44px;width:100%;max-width:420px;position:relative;z-index:1;animation:fadeUp .4s ease}
+  @keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+  .logo{display:flex;align-items:center;gap:10px;margin-bottom:32px}
+  .logo-icon{width:36px;height:36px;background:var(--amber);border-radius:8px;display:flex;align-items:center;justify-content:center}
+  .logo-icon svg{width:20px;height:20px;fill:var(--bg)}
+  .logo-text{font-size:15px;font-weight:600;color:var(--text);letter-spacing:-0.3px}
+  .logo-sub{font-size:11px;color:var(--muted);margin-top:1px}
+  h2{font-size:22px;font-weight:600;letter-spacing:-0.5px;margin-bottom:6px}
+  .subtitle{font-size:13px;color:var(--muted);margin-bottom:32px}
+  .field{margin-bottom:18px}
+  label{display:block;font-size:12px;font-weight:500;color:var(--muted);margin-bottom:6px;letter-spacing:0.3px;text-transform:uppercase}
+  input{width:100%;background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:11px 14px;color:var(--text);font-size:14px;font-family:'DM Sans',sans-serif;outline:none;transition:border-color .2s}
+  input:focus{border-color:var(--amber)}
+  input::placeholder{color:var(--muted)}
+  .btn{width:100%;background:var(--amber);color:var(--bg);border:none;border-radius:8px;padding:12px;font-size:14px;font-weight:600;font-family:'DM Sans',sans-serif;cursor:pointer;transition:background .2s,transform .1s;margin-top:8px;letter-spacing:0.2px}
+  .btn:hover{background:var(--amber2)}
+  .btn:active{transform:scale(0.98)}
+  .btn:disabled{opacity:0.5;cursor:not-allowed}
+  .error{background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.3);color:var(--danger);border-radius:8px;padding:10px 14px;font-size:13px;margin-top:16px;display:none}
+  .footer{text-align:center;font-size:12px;color:var(--muted);margin-top:28px}
+</style>
+</head>
+<body>
+<div class="bg-grid"></div>
+<div class="glow"></div>
+<div class="card">
+  <div class="logo">
+    <div class="logo-icon">
+      <svg viewBox="0 0 24 24"><path d="M3 3h7v7H3zm11 0h7v7h-7zM3 14h7v7H3zm14 3a4 4 0 110-8 4 4 0 010 8z"/></svg>
+    </div>
+    <div>
+      <div class="logo-text">Dashboard Cloning Tool</div>
+      <div class="logo-sub">by Decision Tree</div>
+    </div>
+  </div>
+  <h2>Welcome back</h2>
+  <p class="subtitle">Sign in to your account to continue</p>
+  <div class="field">
+    <label>Email address</label>
+    <input type="email" id="email" placeholder="you@company.com" autocomplete="email">
+  </div>
+  <div class="field">
+    <label>Password</label>
+    <input type="password" id="password" placeholder="••••••••" autocomplete="current-password">
+  </div>
+  <button class="btn" id="loginBtn" onclick="login()">Sign in</button>
+  <div class="error" id="error"></div>
+  <div class="footer">Access is by invitation only &nbsp;·&nbsp; Decision Tree</div>
+</div>
+<script>
+  document.getElementById('password').addEventListener('keydown', e => e.key === 'Enter' && login());
+  async function login() {
+    const email = document.getElementById('email').value.trim();
+    const password = document.getElementById('password').value;
+    const btn = document.getElementById('loginBtn');
+    const err = document.getElementById('error');
+    err.style.display = 'none';
+    if (!email || !password) { showError('Please enter your email and password'); return; }
+    btn.disabled = true; btn.textContent = 'Signing in…';
+    try {
+      const res = await fetch('/api/auth/login', {
+        method: 'POST',
+        headers: {'Content-Type':'application/json'},
+        body: JSON.stringify({email, password})
+      });
+      const data = await res.json();
+      if (!res.ok) { showError(data.detail || 'Login failed'); return; }
+      localStorage.setItem('token', data.token);
+      localStorage.setItem('user', JSON.stringify(data.user));
+      window.location.href = '/app.html';
+    } catch(e) { showError('Network error. Is the server running?'); }
+    finally { btn.disabled = false; btn.textContent = 'Sign in'; }
+  }
+  function showError(msg) {
+    const err = document.getElementById('error');
+    err.textContent = msg; err.style.display = 'block';
+  }
+  // Auto-redirect if already logged in
+  if (localStorage.getItem('token')) window.location.href = '/app.html';
+</script>
+</body>
+</html>

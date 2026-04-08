@@ -1,0 +1,31 @@
+{
+  "dashboards": [
+    {
+      "id": "blue_bottle_executive_summary",
+      "name": "Executive Summary",
+      "description": "Full executive summary with FB attribution, marketing ads and budget pacing",
+      "template_file": "Blue_Bottle_Coffee-_Executive_Summary.twbx",
+      "created_at": "2026-04-08",
+      "datasources": [
+        {
+          "caption": "BlueBottle_FB_Attribution_Report",
+          "table": "fb_attribution",
+          "schema": "dbt_bluebottle_prod",
+          "columns": ["accountid","accountname","ad_id","ad_set_id","ad_type","adname","adsetname","campaign_id","campaign_type","campaignname","category_sub_category","date","destination","detailedtargettype","device","fb_purchase","fb_purchase_one_day_click","fb_purchase_one_day_click_rev","fb_purchase_one_day_view","fb_purchase_one_day_view_rev","fb_purchase_rev","fb_purchase_seven_day_click","fb_purchase_seven_day_click_rev","fb_purchase_seven_day_view","fb_purchase_seven_day_view_rev","fb_purchase_twenty_eight_day_click","fb_purchase_twenty_eight_day_click_rev","fb_purchase_twenty_eight_day_view","fb_purchase_twenty_eight_day_view_rev","fb_subscription","fb_subscription_one_day_click","fb_subscription_one_day_click_rev","fb_subscription_one_day_view","fb_subscription_one_day_view_rev","fb_subscription_rev","fb_subscription_seven_day_click","fb_subscription_seven_day_click_rev","fb_subscription_seven_day_view","fb_subscription_seven_day_view_rev","fb_subscription_twenty_eight_day_click","fb_subscription_twenty_eight_day_click_rev","fb_subscription_twenty_eight_day_view","fb_subscription_twenty_eight_day_view_rev","fiscal_quarter","fs_month","fs_monthend","fs_monthstart","fs_qtrend","fs_qtrstart","fs_week_enddate","fs_week_startdate","fs_year","fs_yearend","fs_yearstart","geography","jump_funneltype","jump_publishertype","objective","pl_clicks","pl_impressions","pl_spend","platform","product","prv_fs_month","prv_fs_monthend","prv_fs_monthstart","prv_fs_qtrend","prv_fs_qtrstart","prv_fs_quarter","prv_fs_week_enddate","prv_fs_week_startdate","prv_fs_yearend","prv_fs_yearstart","quickname","source","sub_category","target_type","trafficsource","updated_ts"]
+        },
+        {
+          "caption": "BlueBottle_Marketing_Ads",
+          "table": "marketing_ads",
+          "schema": "dbt_bluebottle_prod",
+          "columns": ["account_id","account_name","ad_id","ad_name","ad_set_id","ad_set_name","ad_type","aw_bluebottle_purchases","aw_bluebottle_purchases_rev","aw_purchase","aw_purchase_rev","ba_purchase","blue_bottle_ga4","blue_bottle_ga4_rev","campaign_id","campaign_name","campaign_type","category_sub_category","date","destination","detailedtargettype","device","dpa_nondpa","fb_dpa","fb_product","fb_promo","fb_purchase","fb_purchase_revenue","fb_subscription","fb_subscription_revenue","fiscal_quarter","fs_month","fs_monthend","fs_monthstart","fs_qtrend","fs_qtrstart","fs_week_enddate","fs_week_startdate","fs_year","fs_yearend","fs_yearstart","geography","gs_monthlybudget","jump_funneltype","jump_publishertype","new_google_tag","new_google_tag_rev","objective","pj_conversion","pj_conversionrevenue","pl_clicks","pl_impressions","pl_spend","platform","product","prv_fs_month","prv_fs_monthend","prv_fs_monthstart","prv_fs_qtrend","prv_fs_qtrstart","prv_fs_quarter","prv_fs_week_enddate","prv_fs_week_startdate","prv_fs_yearend","prv_fs_yearstart","quickname","source","sub_category","target_type","tk_purchase","tk_revenue","trafficsource","trans_aw_bl0","trans_aw_bl0_rev","updated_ts","within_subscribe_update","within_subscribe_update_rev","fb_purchase_one_day_view_rev"]
+        },
+        {
+          "caption": "BlueBottle_Budget_Pacing",
+          "table": "budget_pacing",
+          "schema": "dbt_bluebottle_prod",
+          "columns": ["budget","channel","date","fiscal_month","fiscal_month_end","fiscal_month_start","fiscal_week_end_date","fiscal_week_start","pl_purchase","pl_purchase_revenue","pl_spend","platform_revenue_target","platform_roas_target","source","updated_ts"]
+        }
+      ]
+    }
+  ]
+}
